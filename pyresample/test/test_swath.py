@@ -46,9 +46,12 @@ class Test(unittest.TestCase):
                     len(w) != 1, 'Failed to create neighbour radius warning')
                 self.assertFalse(('Possible more' not in str(
                     w[0].message)), 'Failed to create correct neighbour radius warning')
+        reffilename = os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                                   'test_files', 'test_self_map.npz'))
 
-        self.assertAlmostEqual(res.sum() / 100., 668848.082208, 1,
-                               msg='Failed self mapping swath for 1 channel')
+        ref = np.load(reffilename)
+        self.assertTrue(np.allclose(ref["arr_0"], res),
+                        msg='Failed self mapping swath for 1 channel')
 
     def test_self_map_multi(self):
         data = np.column_stack((self.tb37v, self.tb37v, self.tb37v))
@@ -67,12 +70,19 @@ class Test(unittest.TestCase):
                 self.assertFalse(('Possible more' not in str(
                     w[0].message)), 'Failed to create correct neighbour radius warning')
 
-        self.assertAlmostEqual(res[:, 0].sum() / 100., 668848.082208, 1,
-                               msg='Failed self mapping swath multi for channel 1')
-        self.assertAlmostEqual(res[:, 1].sum() / 100., 668848.082208, 1,
-                               msg='Failed self mapping swath multi for channel 2')
-        self.assertAlmostEqual(res[:, 2].sum() / 100., 668848.082208, 1,
-                               msg='Failed self mapping swath multi for channel 3')
+        reffilename = os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                                   'test_files', 'test_self_map_multi.npz'))
+
+        ref = np.load(reffilename)["arr_0"]
+
+        self.assertTrue(np.allclose(ref[:, 0], res[:, 0]),
+                        msg='Failed self mapping swath multi for 1 channel')
+
+        self.assertTrue(np.allclose(ref[:, 1], res[:, 1]),
+                        msg='Failed self mapping swath multi for 1 channel')
+
+        self.assertTrue(np.allclose(ref[:, 2], res[:, 2]),
+                        msg='Failed self mapping swath multi for 1 channel')
 
 
 def suite():
