@@ -1,5 +1,6 @@
 import os
 import unittest
+import six
 
 from pyresample import utils
 
@@ -69,8 +70,8 @@ Area extent: (-5326849.0625, -5326849.0625, 5326849.0625, 5326849.0625)""")
     def test_unicode_proj4_string(self):
         """Test that unicode is accepted for area creation.
         """
-        utils.get_area_def(u"eurol", u"eurol", u"bla",
-                           u'+proj=stere +a=6378273 +b=6356889.44891 +lat_0=90 +lat_ts=70 +lon_0=-45',
+        utils.get_area_def(six.u("eurol"), six.u("eurol"), six.u("bla"),
+                           six.u('+proj=stere +a=6378273 +b=6356889.44891 +lat_0=90 +lat_ts=70 +lon_0=-45'),
                            1000, 1000, (-1000, -1000, 1000, 1000))
 
 
