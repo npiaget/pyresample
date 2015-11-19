@@ -416,21 +416,21 @@ class AreaDefinition(BaseDefinition):
     """Holds definition of an area.
 
     :Parameters:
-    area_id : str 
+    area_id : str
         ID of area
     name : str
         Name of area
-    proj_id : str 
+    proj_id : str
         ID of projection
-    proj_dict : dict 
+    proj_dict : dict
         Dictionary with Proj.4 parameters
-    x_size : int 
+    x_size : int
         x dimension in number of pixels
-    y_size : int     
-        y dimension in number of pixels    
-    area_extent : list 
+    y_size : int
+        y dimension in number of pixels
+    area_extent : list
         Area extent as a list (LL_x, LL_y, UR_x, UR_y)
-    nprocs : int, optional 
+    nprocs : int, optional
         Number of processor cores to be used
     lons : numpy array, optional
         Grid lons
@@ -438,37 +438,37 @@ class AreaDefinition(BaseDefinition):
         Grid lats
 
     :Attributes:
-    area_id : str         
+    area_id : str
         ID of area
     name : str
         Name of area
-    proj_id : str         
+    proj_id : str
         ID of projection
-    proj_dict : dict        
+    proj_dict : dict
         Dictionary with Proj.4 parameters
-    x_size : int          
+    x_size : int
         x dimension in number of pixels
-    y_size : int          
+    y_size : int
         y dimension in number of pixels
     shape : tuple
         Corresponding array shape as (rows, cols)
     size : int
         Number of points in grid
-    area_extent : tuple     
+    area_extent : tuple
         Area extent as a tuple (LL_x, LL_y, UR_x, UR_y)
-    area_extent_ll : tuple     
+    area_extent_ll : tuple
         Area extent in lons lats as a tuple (LL_lon, LL_lat, UR_lon, UR_lat)
-    pixel_size_x : float    
+    pixel_size_x : float
         Pixel width in projection units
-    pixel_size_y : float    
+    pixel_size_y : float
         Pixel height in projection units
-    pixel_upper_left : list 
+    pixel_upper_left : list
         Coordinates (x, y) of center of upper left pixel in projection units
-    pixel_offset_x : float 
-        x offset between projection center and upper left corner of upper 
+    pixel_offset_x : float
+        x offset between projection center and upper left corner of upper
         left pixel in units of pixels.
-    pixel_offset_y : float 
-        y offset between projection center and upper left corner of upper 
+    pixel_offset_y : float
+        y offset between projection center and upper left corner of upper
         left pixel in units of pixels..
 
     Properties:
@@ -635,7 +635,7 @@ class AreaDefinition(BaseDefinition):
         return self.get_lonlats(nprocs=None, data_slice=(row, col))
 
     def get_proj_coords(self, data_slice=None, cache=False, dtype=None):
-        """Get projection coordinates of grid 
+        """Get projection coordinates of grid
 
         :Parameters:
         data_slice : slice object, optional
@@ -643,7 +643,7 @@ class AreaDefinition(BaseDefinition):
         cache : bool, optional
             Store result the result. Requires data_slice to be None
 
-        :Returns: 
+        :Returns:
         (target_x, target_y) : tuple of numpy arrays
             Grids of area x- and y-coordinates in projection units
         """
@@ -778,8 +778,8 @@ class AreaDefinition(BaseDefinition):
     def get_lonlats(self, nprocs=None, data_slice=None, cache=False, dtype=None):
         """Returns lon and lat arrays of area.
 
-        :Parameters:        
-        nprocs : int, optional 
+        :Parameters:
+        nprocs : int, optional
             Number of processor cores to be used.
             Defaults to the nprocs set when instantiating object
         data_slice : slice object, optional
@@ -787,7 +787,7 @@ class AreaDefinition(BaseDefinition):
         cache : bool, optional
             Store result the result. Requires data_slice to be None
 
-        :Returns: 
+        :Returns:
         (lons, lats) : tuple of numpy arrays
             Grids of area lons and and lats
         """
@@ -841,7 +841,7 @@ class AreaDefinition(BaseDefinition):
         """Returns projection definition as Proj.4 string"""
 
         items = self.proj_dict.items()
-        return '+' + ' +'.join([t[0] + '=' + t[1] for t in items])
+        return '+' + ' +'.join(['{}={}'.format(*t) for t in items])
 
 
 def _get_slice(segments, shape):
